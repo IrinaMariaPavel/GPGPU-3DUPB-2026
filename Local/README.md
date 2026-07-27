@@ -27,7 +27,12 @@ It is important to note that MSVC (Cpp compiler) and NVCC (NVIDIA CUDA Compiler)
 
 3. Install CMake for your system. You can download it from the [CMake website](https://cmake.org/download/). Make sure to add CMake to your system's PATH during installation.
 
-4. Run the CMakeList.txt either from CMAKE GUI or from the command line. If you are using the command line, navigate to the directory containing the CMakeLists.txt file and run the following command:
+4. Run the CMakeList.txt either from CMAKE GUI or from the command line. 
+
+If you want to use the CMake GUI, follow these steps highlighted in the graphics course which you did or will do in the future (year 3, semester 1 :))
+[Guide](https://ocw.cs.pub.ro/courses/egc/setup-framework#utilitarul_cmake)
+
+If you are using the command line, navigate to the directory containing the CMakeLists.txt file and run the following command:
 
 ```bash
 # This creates the MSVC solution and project files in a build directory
