@@ -120,7 +120,7 @@ clean:
 
 ```bash
 
-scp -r Cuda-Samples/src moodle_username@fep.grid.pub.ro:~/
+scp -r Cluster moodle_username@fep.grid.pub.ro:~/
 ```
 
 7. You are all set! :)
