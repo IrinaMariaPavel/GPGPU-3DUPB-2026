@@ -12,7 +12,13 @@ countingGFLOPS: src/1/CountingGFLOPS.cu
 cudaProperties: src/2/CudaProperties.cu
 	$(NVCC) $(NVCCFLAGS) $< -o $@
 
+variableSum: src/3/VariableSum.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
+matrixMul: src/4/MatrixMultiply.cu
+	$(NVCC) $(NVCCFLAGS) $< -o $@
+
 clean:
-	rm -f countingGFLOPS cudaProperties
+	rm -f countingGFLOPS cudaProperties variableSum matrixMul
 
 .PHONY: all clean
