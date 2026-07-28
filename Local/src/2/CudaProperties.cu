@@ -8,6 +8,9 @@
 */
 #include <stdio.h>
 
+// TODO: Have I forgotten to include something ? (Hint: Look at exercise 1 - GLFLOPS)
+// Bonus question: Why the program still compiles ?
+
 inline void cudaCheckError(cudaError_t err) {
     if (err != cudaSuccess) {
         printf("Error: %s\n", cudaGetErrorString(err));
@@ -32,7 +35,12 @@ int main() {
     // Those ones can be used to determine the number of cores per SM
     // and the number of SMs per GPU
     int multiProcessorCount = prop.multiProcessorCount;
-    // 64 is because prop.major is 7 and prop.minor is 5
+
+    // TODO: Modify the code to compute the number of SPs/SM based on the compute capability of your GPU
+    // I intentionally hardcoded the number of SPs/SM here
+    // Look at the cuda samples from https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h
+    // convert from minor and major version to the number of cores per SM
+
     int SPcores = multiProcessorCount * 64;
     printf("Number of SMs: %d\n", multiProcessorCount);
     printf("Number of SP cores: %d\n", SPcores);

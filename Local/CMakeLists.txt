@@ -6,8 +6,8 @@ cmake_policy(SET CMP0104 NEW)
 # Set the name of the project
 project(CleanCudaExamples LANGUAGES CXX CUDA)
 
-# Set CUDA architectures according to your GPU.
-# You can check your GPU architecture at https://developer.nvidia.com/cuda/gpus and set the appropriate value.
+# TODO: Actualize this number to fit your local architecture. Otherwise, kernels won't function properly and may
+# even be undeterministic. You can check your GPU architecture at https://developer.nvidia.com/cuda/gpus and set the appropriate value.
 set(CMAKE_CUDA_ARCHITECTURES 80)
 
 # Gather the source files

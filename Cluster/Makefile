@@ -1,6 +1,7 @@
 NVCC ?= nvcc
-# A100 Cluster GPU architecture is sm_80. You can check on https://developer.nvidia.com/cuda-gpus.
-CUDA_ARCH ?= sm_80
+# TODO: Check the GPU used by the queue which you use on the cluster. (A100 if you use the demo one, dgxa100)
+# Modify the CUDA_ARCH variable to match your GPU architecture. You can check your GPU architecture at https://developer.nvidia.com/cuda/gpus and set the appropriate value.
+CUDA_ARCH ?= sm_120
 NVCCFLAGS ?= -O2 -arch=$(CUDA_ARCH)
 
 all: countingGFLOPS cudaProperties
