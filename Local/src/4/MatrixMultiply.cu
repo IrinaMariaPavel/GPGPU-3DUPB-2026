@@ -1,3 +1,8 @@
+/* Program to multiply matrices using CUDA
+ * Given two matrices A and B, compute the product C = A * B
+ * The correct result of this is SIZE * SIZE, since we fill the matrices with 1s and 1*1 = 1
+ * You have two versions of the kernel, one naive and one optimized using shared memory. Compare the performance of the two.
+*/
 #include <stdio.h>
 #include <vector>
 
