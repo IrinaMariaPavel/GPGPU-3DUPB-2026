@@ -1,20 +1,35 @@
-/* Start program to get the number of CUDA cappable devices
-   For those devices, get relevant information as:
-    - Device name
-    - Compute capability
-    - Total global memory
-    - Number of SMs(SM = Streaming Multiprocessor)
-    - Number of SP cores(SP = Stream Processor)
-*/
 #include <stdio.h>
-
-// TODO: Have I forgotten to include something ? (Hint: Look at exercise 1 - GLFLOPS)
-// Bonus question: Why the program still compiles ?
+#include <cuda.h>
+#include <cuda_runtime.h>
 
 inline void cudaCheckError(cudaError_t err) {
     if (err != cudaSuccess) {
         printf("Error: %s\n", cudaGetErrorString(err));
         exit(-1);
+    }
+}
+
+int _ConvertSMVer2Cores(int major, int minor) {
+    switch ((major << 4) + minor) {
+        case 0x30: return 192;
+        case 0x32: return 192;
+        case 0x35: return 192;
+        case 0x37: return 192;
+        case 0x50: return 128;
+        case 0x52: return 128;
+        case 0x53: return 128;
+        case 0x60: return 64;
+        case 0x61: return 128;
+        case 0x62: return 128;
+        case 0x70: return 64;
+        case 0x72: return 64;
+        case 0x75: return 64;
+        case 0x80: return 64;
+        case 0x86: return 128;
+        case 0x87: return 128;
+        case 0x89: return 128;
+        case 0x90: return 128;
+        default: return 64;
     }
 }
 
@@ -25,24 +40,22 @@ int main() {
     err = cudaGetDeviceCount(&nDevices);
     cudaCheckError(err);
 
-    // The output should be 1 since the only capable one is our main GPU
-    cudaDeviceProp prop;
-    err = cudaGetDeviceProperties(&prop, 0);
-    printf("Device name: %s\n", prop.name);
-    printf("Compute capability: %d.%d\n", prop.major, prop.minor);
+    for (int i = 0; i < nDevices; i++) {
+        cudaDeviceProp prop;
+        err = cudaGetDeviceProperties(&prop, i);
+        cudaCheckError(err);
 
-    // Major and minor version of compute capability
-    // Those ones can be used to determine the number of cores per SM
-    // and the number of SMs per GPU
-    int multiProcessorCount = prop.multiProcessorCount;
+        printf("Device name: %s\n", prop.name);
+        printf("Compute capability: %d.%d\n", prop.major, prop.minor);
+        printf("Total global memory: %.2f GB\n", (double)prop.totalGlobalMem / (1024 * 1024 * 1024));
 
-    // TODO: Modify the code to compute the number of SPs/SM based on the compute capability of your GPU ((if you are on the suggested queue, you have A100 GPU)
-    // I intentionally hardcoded the number of SPs/SM here
-    // Look at the cuda samples from https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h
-    // convert from minor and major version to the number of cores per SM
+        int multiProcessorCount = prop.multiProcessorCount;
+        int coresPerSM = _ConvertSMVer2Cores(prop.major, prop.minor);
+        int SPcores = multiProcessorCount * coresPerSM;
 
-    int SPcores = multiProcessorCount * 64;
-    printf("Number of SMs: %d\n", multiProcessorCount);
-    printf("Number of SP cores: %d\n", SPcores);
+        printf("Number of SMs: %d\n", multiProcessorCount);
+        printf("Number of SP cores: %d\n\n", SPcores);
+    }
 
+    return 0;
 }
